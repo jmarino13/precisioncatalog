@@ -592,10 +592,22 @@ function initComplianceGate() {
     const ok = sessionStorage.getItem("heal_access_ok") === "1";
     if (!ok) showPinGate();
   }
+initDocs();
+fixDisclosureLink();
+initComplianceGate();
 
   initDocs();
   initComplianceGate();   // <-- ADD THIS
 })();
+function fixDisclosureLink() {
+  const a = document.getElementById("disclosureLink");
+  if (!a) return;
+
+  // Force correct path every load (prevents “second click = 404”)
+  a.href = "./compliance.html";
+  a.target = "_blank";
+  a.rel = "noopener";
+}
 
   </script>
 </body>
