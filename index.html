@@ -444,12 +444,7 @@ function initComplianceGate() {
   const check = document.getElementById("ackCheck");
   const agree = document.getElementById("agreeBtn");
   const msg = document.getElementById("gateMsg");
-  const disclosureLink = document.getElementById("disclosureLink");
 
-  // Optional: point this to your real disclosure PDF/page
-  disclosureLink.href = "pdf/peptide-compliance-disclosure.pdf";
-  disclosureLink.target = "_blank";
-  disclosureLink.rel = "noopener";
 
   // Lock by default unless already accepted this session
   const accepted = sessionStorage.getItem("heal_compliance_ok") === "1";
