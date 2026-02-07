@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Precision Wellness | Documents</title>
+
+  <!-- OPTIONAL: discourage search engines -->
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- ========== GA4 (Upgrade) ==========
+       1) Create GA4 property (Google Analytics)
+       2) Replace G-XXXXXXXXXX below
+  -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+  </script>
+
+  <style>
+    :root{
+      --Precision-navy: #0B0F15;
+      --Precision-blue: #2F3E4F;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.10);
+      --border: rgba(239,230,219,0.18);
+      --shadow: 0 18px 55px rgba(0,0,0,0.35);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(255,255,255,0.10), transparent 60%),
+                  radial-gradient(900px 500px at 90% 20%, rgba(0,0,0,0.18), transparent 60%),
+                  var(--heal-brown);
+      color: var(--heal-cream);
+    }
+
+  .wrap{
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px;   /* was 22px */
+}
+
+
+  .topbar{
+  padding: 8px 4px 10px; /* was 12px 4px 18px */
+}
+
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 240px;
+    }
+    .brand img{
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      padding: 8px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: 0.4px;
+    }
+    .brand .sub{
+      margin-top: 3px;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+  .card{
+  padding: 12px; /* was 18px */
+}
+
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    select{
+      background: rgba(255,255,255,0.08);
+      color: var(--heal-cream);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      font-size: 14px;
+      outline: none;
+      min-width: 260px;
+    }
+    option{
+      color: #111;
+    }
+
+    .btns{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    a.btn, button.btn{
+      cursor:pointer;
+      appearance:none;
+      border: 1px solid var(--border);
+      background: rgba(239,230,219,0.10);
+      color: var(--heal-cream);
+      padding: 12px 14px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-size: 14px;
+      transition: transform .08s ease, background .2s ease;
+    }
+    a.btn.primary, button.btn.primary{
+      background: rgba(239,230,219,0.18);
+    }
+    a.btn:hover, button.btn:hover{
+      transform: translateY(-1px);
+      background: rgba(239,230,219,0.16);
+    }
+
+    .hint{
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 8px;
+      line-height: 1.35;
+    }
+
+ .viewer{
+  margin-top: 6px; /* tighter */
+}
+
+
+
+   iframe{
+  width: 100%;
+  height: calc(100vh - 360px);
+  min-height: 520px;
+  border: 0;
+  display: block;
+}
+
+
+    .footer{
+      text-align:center;
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 16px;
+    }
+
+    .mini{
+      font-size: 12px;
+      opacity: 0.82;
+    }
+
+    /* PIN modal (Soft password gate) */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,0.62);
+      padding: 18px;
+      z-index: 9999;
+    }
+    .modal{
+      width: min(520px, 96vw);
+      background: #1b1b1b;
+      color: #fff;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 18px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.6);
+    }
+    .modal h2{ margin:0 0 6px 0; font-size: 18px; }
+    .modal p{ margin:0 0 14px 0; opacity:0.85; font-size: 13px; }
+    .modal input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      color:#fff;
+      font-size: 14px;
+      outline:none;
+    }
+    .modal .actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top: 12px;
+    }
+    @media (min-width: 1024px) {
+  iframe {
+    height: calc(100vh - 320px);
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- ===== Soft Password Gate (optional) =====
+       Turn ON by setting REQUIRE_PIN = true in script below.
+       Note: This is NOT high-security; it’s a speed bump.
+  -->
+  <div class="overlay" id="pinOverlay">
+    <div class="modal">
+      <h2>Precision Wellness — Secure Access</h2>
+      <p>Enter the access code to view documents.</p>
+      <input id="pinInput" type="password" placeholder="Enter code" autocomplete="one-time-code" />
+      <div class="actions">
+        <button class="btn" id="pinCancel">Cancel</button>
+        <button class="btn primary" id="pinSubmit">Continue</button>
+      </div>
+      <div class="mini" id="pinError" style="margin-top:10px; color:#ffb3b3; display:none;">
+        Incorrect code. Please try again.
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <img src="assets/Logo.png" alt="Precision Wellness logo" />
+        <div>
+          <h1>Precision Wellness</h1>
+          <div class="sub">Scan → View → Download</div>
+        </div>
+      </div>
+
+      <div class="pill" id="campaignPill">QR Landing Page</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row">
+          <div style="min-width:240px;">
+            <div style="font-size:16px; font-weight:600;">Documents</div>
+            <div class="hint">Select a document, then open or download. On mobile, we’ll automatically open the PDF for the best experience.</div>
+          </div>
+
+          <div class="controls">
+            <select id="docSelect" aria-label="Choose document"></select>
+
+            <div class="btns">
+              <a id="openBtn" class="btn primary" href="#" target="_blank" rel="noopener">Open PDF</a>
+              <a id="downloadBtn" class="btn" href="#" download>Download</a>
+              <button id="copyLinkBtn" class="btn" type="button">Copy Link</button>
+            </div>
+          </div>
+        </div>
+<div class="footer">
+  © Precision Wellness LLC ·
+  <a href="compliance.html">Peptide Compliance Disclosure</a>
+</div>
+<!-- Compliance acknowledgment (light) -->
+<div class="ack" style="
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background: rgba(0,0,0,0.14);
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+">
+  <input id="ackBox" type="checkbox" style="margin-top:3px; width:18px; height:18px;">
+  <label for="ackBox" style="cursor:pointer; line-height:1.35; font-size:13px; opacity:.95;">
+    I acknowledge the <a href="compliance.html" target="_blank" rel="noopener" style="color:var(--heal-cream); text-decoration:underline;">
+      Peptide Compliance Disclosure
+    </a> and understand peptides are provided for research/educational purposes only, with no guarantees, and any dosing references are suggested guidelines only.
+  </label>
+</div>
+
+        <div class="viewer">
+          <iframe id="pdfFrame" src="" title="Precision Wellness PDF"></iframe>
+        </div>
+
+        <div class="footer">
+          Tip: Keep your QR code pointed to this page — you can swap PDFs anytime without reprinting.
+        </div>
+      </div>
+
+           </div>
+    </div>
+  </div>
+
+  <script>
+    /************************************************************
+     * CONFIG
+     ************************************************************/
+    // 1) List your PDFs here (name + path). Add as many as you want.
+    const DOCS = [
+      { id: "product",  name: "Precision Product Sheet",        file: "pdf/PW Peptide Catalog.pdf" },
+      { id: "pricing",  name: "Precision Pricing Sheet",        file: "pdf/PW Peptide Catalog.pdf" },
+      { id: "estriol",  name: "Estriol Face Cream Guide",  file: "pdf/PW Peptide Catalog.pdf" },
+    ];
+
+    // 2) Soft password gate (optional)
+    const REQUIRE_PIN = false;         // <-- set to true to turn on
+    const ACCESS_PIN  = "Precision2025";    // <-- change if you turn it on
+
+    // 3) Mobile behavior:
+    //    true  = on phones/tablets, open PDF directly (best UX)
+    //    false = always stay on landing page with embedded viewer
+    const AUTO_OPEN_ON_MOBILE = true;
+
+    /************************************************************
+     * HELPERS
+     ************************************************************/
+    const qs = (k) => new URLSearchParams(window.location.search).get(k);
+    const isMobile = () => /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+    function track(eventName, params = {}) {
+      try {
+        if (typeof gtag === "function") gtag("event", eventName, params);
+      } catch(e) {}
+    }
+
+    function withUtm(url) {
+      // Preserve UTM parameters when opening/downloading PDFs
+      const u = new URL(url, window.location.href);
+      const p = new URLSearchParams(window.location.search);
+      ["utm_source","utm_medium","utm_campaign","utm_term","utm_content"].forEach(k=>{
+        if (p.get(k)) u.searchParams.set(k, p.get(k));
+      });
+      return u.toString();
+    }
+
+    function setCampaignPill() {
+      const source = qs("utm_source");
+      const campaign = qs("utm_campaign");
+      const pill = document.getElementById("campaignPill");
+      if (source || campaign) {
+        pill.textContent = `Campaign: ${campaign || "—"} • Source: ${source || "—"}`;
+      } else {
+        pill.textContent = "QR Landing Page";
+      }
+    }
+
+    /************************************************************
+     * PIN GATE
+     ************************************************************/
+    function showPinGate() {
+      const overlay = document.getElementById("pinOverlay");
+      const input = document.getElementById("pinInput");
+      const err = document.getElementById("pinError");
+      const cancel = document.getElementById("pinCancel");
+      const submit = document.getElementById("pinSubmit");
+
+      overlay.style.display = "flex";
+      input.focus();
+
+      cancel.onclick = () => {
+        // If they cancel, just send them to your main site (edit as needed)
+        window.location.href = "https://www.precisionpep.com";
+      };
+
+      function tryPin() {
+        if (input.value === ACCESS_PIN) {
+          overlay.style.display = "none";
+          sessionStorage.setItem("Precision_access_ok", "1");
+          track("pin_success");
+        } else {
+          err.style.display = "block";
+          track("pin_fail");
+        }
+      }
+
+      submit.onclick = tryPin;
+      input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") tryPin(); });
+    }
+
+    /************************************************************
+     * DOC UI
+     ************************************************************/
+    function initDocs() {
+      const select = document.getElementById("docSelect");
+      const frame  = document.getElementById("pdfFrame");
+      const openBtn = document.getElementById("openBtn");
+      const dlBtn = document.getElementById("downloadBtn");
+      const copyBtn = document.getElementById("copyLinkBtn");
+
+      // Determine chosen doc from ?doc=xxx else default first
+      const desired = qs("doc");
+      const doc = DOCS.find(d => d.id === desired) || DOCS[0];
+
+      // Populate dropdown
+      DOCS.forEach(d => {
+        const opt = document.createElement("option");
+        opt.value = d.id;
+        opt.textContent = d.name;
+        select.appendChild(opt);
+      });
+      select.value = doc.id;
+
+      function setDocById(id) {
+        const chosen = DOCS.find(d=>d.id===id) || DOCS[0];
+        const pdfUrl = withUtm(chosen.file);
+        const viewUrl = pdfUrl + "#view=FitH&zoom=page-width";
+
+
+        // Update buttons
+        openBtn.href = pdfUrl;
+        dlBtn.href = pdfUrl;
+
+        // Update iframe viewer
+        frame.src = viewUrl;
+
+        // Update URL (so each document has a shareable link)
+        const url = new URL(window.location.href);
+        url.searchParams.set("doc", chosen.id);
+        window.history.replaceState({}, "", url.toString());
+
+        track("doc_view", { doc_id: chosen.id, doc_name: chosen.name });
+      }
+
+      setDocById(doc.id);
+
+      // Change handler
+      select.addEventListener("change", () => {
+        setDocById(select.value);
+      });
+
+      // Track clicks
+      openBtn.addEventListener("click", () => track("open_pdf_click", { doc_id: select.value }));
+      dlBtn.addEventListener("click", () => track("download_pdf_click", { doc_id: select.value }));
+
+      // Copy share link
+      copyBtn.addEventListener("click", async () => {
+        const url = window.location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          copyBtn.textContent = "Copied!";
+          setTimeout(()=> copyBtn.textContent="Copy Link", 1200);
+          track("copy_link", { doc_id: select.value });
+        } catch(e) {
+          alert("Copy failed. You can manually copy the URL from the address bar.");
+        }
+      });
+
+      // Mobile auto-open for best UX
+      if (AUTO_OPEN_ON_MOBILE && isMobile()) {
+        // Only auto-open once per session to avoid loops
+        if (!sessionStorage.getItem("precision_mobile_opened")) {
+          sessionStorage.setItem("precision_mobile_opened", "1");
+          track("mobile_auto_open", { doc_id: select.value });
+          // Send them directly to the PDF
+          window.location.href = openBtn.href;
+        }
+      }
+    }
+
+    /************************************************************
+     * BOOT
+     ************************************************************/
+    (function boot(){
+      setCampaignPill();
+
+      // Track QR landing page view (your QR code points here)
+      track("landing_view", {
+        utm_source: qs("utm_source") || "",
+        utm_medium: qs("utm_medium") || "",
+        utm_campaign: qs("utm_campaign") || ""
+      });
+
+      if (REQUIRE_PIN) {
+        const ok = sessionStorage.getItem("precision_access_ok") === "1";
+        if (!ok) showPinGate();
+      }
+
+      initDocs();
+    })();
+  </script>
+</body>
+</html>
