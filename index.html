@@ -235,6 +235,71 @@
     height: calc(100vh - 320px);
   }
 }
+/* ===== Compliance Gate ===== */
+.gate {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.18);
+}
+
+.gate__row{
+  display:flex;
+  align-items:flex-start;
+  gap: 12px;
+}
+
+.gate__row input{
+  margin-top: 4px;
+  transform: scale(1.1);
+}
+
+.gate__text{
+  line-height: 1.35;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.gate__actions{
+  margin-top: 12px;
+  display:flex;
+  gap:10px;
+  flex-wrap: wrap;
+}
+
+/* Locked state */
+.locked .viewer{
+  position: relative;
+}
+
+.locked .viewer iframe{
+  filter: blur(10px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.35;
+}
+
+.locked .viewer::after{
+  content: "Please acknowledge the research-only disclosure above to view this document.";
+  position:absolute;
+  inset: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--heal-cream);
+  background: rgba(0,0,0,0.40);
+}
+
+/* Disable buttons until accepted */
+.locked a.btn{
+  opacity: 0.45;
+  pointer-events: none;
+}
 
   </style>
 </head>
@@ -312,6 +377,20 @@
     </a> and understand peptides are provided for research/educational purposes only, with no guarantees, and any dosing references are suggested guidelines only.
   </label>
 </div>
+<div class="gate" id="complianceGate">
+  <div class="gate__row">
+    <input type="checkbox" id="ackCheck" />
+    <div class="gate__text">
+      I acknowledge the <a href="#" id="disclosureLink">Peptide Compliance Disclosure</a> and understand the information provided is for
+      research/educational purposes only, with no guarantees, and any dosing references are suggested guidelines only.
+    </div>
+  </div>
+
+  <div class="gate__actions">
+    <button class="btn primary" type="button" id="agreeBtn">I Agree — View Document</button>
+    <span class="mini" id="gateMsg" style="display:none; opacity:.9;">Please check the box to continue.</span>
+  </div>
+</div>
 
         <div class="viewer">
           <iframe id="pdfFrame" src="" title="Precision Wellness PDF"></iframe>
@@ -376,6 +455,35 @@
         pill.textContent = "";
       }
     }
+function initComplianceGate() {
+  const body = document.body;
+  const check = document.getElementById("ackCheck");
+  const agree = document.getElementById("agreeBtn");
+  const msg = document.getElementById("gateMsg");
+  const disclosureLink = document.getElementById("disclosureLink");
+
+  // Optional: point this to your real disclosure PDF/page
+  disclosureLink.href = "pdf/peptide-compliance-disclosure.pdf";
+  disclosureLink.target = "_blank";
+  disclosureLink.rel = "noopener";
+
+  // Lock by default unless already accepted this session
+  const accepted = sessionStorage.getItem("heal_compliance_ok") === "1";
+  if (!accepted) body.classList.add("locked");
+
+  agree.addEventListener("click", () => {
+    if (!check.checked) {
+      msg.style.display = "inline";
+      return;
+    }
+    msg.style.display = "none";
+    sessionStorage.setItem("heal_compliance_ok", "1");
+    body.classList.remove("locked");
+
+    // analytics event if GA is on
+    try { track("compliance_accept"); } catch(e) {}
+  });
+}
 
     /************************************************************
      * PIN GATE
@@ -493,23 +601,23 @@
     /************************************************************
      * BOOT
      ************************************************************/
-    (function boot(){
-      setCampaignPill();
+   (function boot(){
+  setCampaignPill();
+  track("landing_view", {
+    utm_source: qs("utm_source") || "",
+    utm_medium: qs("utm_medium") || "",
+    utm_campaign: qs("utm_campaign") || ""
+  });
 
-      // Track QR landing page view (your QR code points here)
-      track("landing_view", {
-        utm_source: qs("utm_source") || "",
-        utm_medium: qs("utm_medium") || "",
-        utm_campaign: qs("utm_campaign") || ""
-      });
+  if (REQUIRE_PIN) {
+    const ok = sessionStorage.getItem("heal_access_ok") === "1";
+    if (!ok) showPinGate();
+  }
 
-      if (REQUIRE_PIN) {
-        const ok = sessionStorage.getItem("precision_access_ok") === "1";
-        if (!ok) showPinGate();
-      }
+  initDocs();
+  initComplianceGate();   // <-- ADD THIS
+})();
 
-      initDocs();
-    })();
   </script>
 </body>
 </html>
