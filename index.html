@@ -405,7 +405,7 @@ and understand the information provided is for research/educational purposes onl
     // 3) Mobile behavior:
     //    true  = on phones/tablets, open PDF directly (best UX)
     //    false = always stay on landing page with embedded viewer
-    const AUTO_OPEN_ON_MOBILE = true;
+    const AUTO_OPEN_ON_MOBILE = false;
 
     /************************************************************
      * HELPERS
@@ -458,6 +458,11 @@ function initComplianceGate() {
     msg.style.display = "none";
     sessionStorage.setItem("heal_compliance_ok", "1");
     body.classList.remove("locked");
+// On mobile, open the PDF AFTER acceptance
+if (isMobile()) {
+  const openBtn = document.getElementById("openBtn");
+  if (openBtn && openBtn.href) window.location.href = openBtn.href;
+}
 
     // analytics event if GA is on
     try { track("compliance_accept"); } catch(e) {}
